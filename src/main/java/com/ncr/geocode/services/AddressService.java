@@ -7,5 +7,5 @@ import java.util.List;
 public interface AddressService {
 
     List<Address> getCachedAddresses();
-    Address get(float lat, float lon);
+    Address get(double lat, double lon);
 }

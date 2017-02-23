@@ -1,6 +1,7 @@
 package com.google.maps;
 
 import com.google.maps.model.GeocodingResult;
+import com.ncr.geocode.exceptions.GeocodingException;
 import com.ncr.geocode.models.Address;
 import com.ncr.geocode.services.GoogleAddressService;
 import org.junit.Before;
@@ -17,10 +18,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+/**
+ * NOTE: geoApiContext.get() is package-private so I put this test class here as a workaround
+ */
 public class GoogleAddressServiceTest  {
 
-    private static final Float LATITUDE = -38.010403f;
-    private static final Float LONGITUDE = -57.558408f;
+    private static final Double LATITUDE = -38.010403;
+    private static final Double LONGITUDE = -57.558408;
 
     @Mock
     GeoApiContext geoApiContext;
@@ -42,12 +46,18 @@ public class GoogleAddressServiceTest  {
         PendingResult<GeocodingResult[]> pendingResult = mock(PendingResult.class);
         when(pendingResult.await()).thenReturn(geocodingResults);
 
-        // this get() is package private so i put it here as a workaround
         when(geoApiContext.get(any(), any(), anyMap())).thenReturn(pendingResult);
 
         Address actualAddress = googleAddressService.getAddress(LATITUDE, LONGITUDE);
 
-        assertEquals(expectedAddress.getAddress(), actualAddress.getAddress());
+        assertEquals(expectedAddress.getFormattedAddress(), actualAddress.getFormattedAddress());
         assertEquals(expectedAddress.getLatLon(), actualAddress.getLatLon());
+    }
+
+    @Test(expected = GeocodingException.class)
+    public void testGetAddressWhenException() throws Exception {
+        when(geoApiContext.get(any(), any(), anyMap())).thenThrow(new RuntimeException());
+
+        googleAddressService.getAddress(LATITUDE, LONGITUDE);
     }
 }

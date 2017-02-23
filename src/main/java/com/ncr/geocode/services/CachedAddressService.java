@@ -2,6 +2,7 @@ package com.ncr.geocode.services;
 
 import com.ncr.geocode.cache.Cache;
 import com.ncr.geocode.controllers.GeocodeController;
+import com.ncr.geocode.exceptions.CacheMissException;
 import com.ncr.geocode.models.Address;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Component
 public class CachedAddressService implements AddressService {
@@ -34,15 +34,15 @@ public class CachedAddressService implements AddressService {
     }
 
     @Override
-    public Address get(float lat, float lon) {
+    public Address get(double lat, double lon) {
         String latLon = lat + "/" + lon;
 
         try {
             Address address = addressCache.get(latLon);
             LOGGER.debug("Cache hit on {}", latLon);
             return address;
-        } catch (NoSuchElementException e) {
-            LOGGER.debug("Cache miss on " + latLon, e);
+        } catch (CacheMissException e) {
+            LOGGER.trace("Cache miss on " + latLon, e);
             Address addressFromWeb = webAddressService.getAddress(lat, lon);
             addressCache.put(latLon, addressFromWeb);
             return addressFromWeb;

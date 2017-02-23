@@ -1,10 +1,12 @@
 package com.ncr.geocode.cache;
 
+import com.ncr.geocode.exceptions.CacheMissException;
+
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class LinkedHashMapCache<K, V> implements Cache<K, V>   {
 
@@ -25,7 +27,7 @@ public class LinkedHashMapCache<K, V> implements Cache<K, V>   {
             return linkedHashMap.get(key);
         }
 
-        throw new NoSuchElementException();
+        throw new CacheMissException(Objects.toString(key, "<null>"));
     }
 
     @Override

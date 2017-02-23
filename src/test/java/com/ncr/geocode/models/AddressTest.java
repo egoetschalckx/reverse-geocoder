@@ -12,16 +12,16 @@ public class AddressTest {
     public void testAllFields() {
         String addr = "foo";
         OffsetDateTime offsetDateTime = OffsetDateTime.now();
-        float lat = 42;
-        float lon = 9001;
-        String expectedToString = "Address{" + "address='" + addr + '\'' + ", ts=" + offsetDateTime + ", lat=" + lat + ", lon=" + lon + '}';
+        double lat = 42;
+        double lon = 9001;
+        String expectedToString = "Address{" + "formattedAddress='" + addr + '\'' + ", ts=" + offsetDateTime + ", lat=" + lat + ", lon=" + lon + '}';
 
         Address address = new Address(addr, offsetDateTime, lat, lon);
 
-        assertEquals(addr, address.getAddress());
+        assertEquals(addr, address.getFormattedAddress());
         assertEquals(offsetDateTime, address.getTs());
-        assertEquals(lat, address.getLat(), .1);
-        assertEquals(lon, address.getLon(), .1);
+        assertEquals(lat, address.getLat(), .000001);
+        assertEquals(lon, address.getLon(), .000001);
         assertEquals(expectedToString, address.toString());
     }
 }

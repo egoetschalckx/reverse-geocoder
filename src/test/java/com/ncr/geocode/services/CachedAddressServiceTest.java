@@ -1,6 +1,7 @@
 package com.ncr.geocode.services;
 
 import com.ncr.geocode.cache.Cache;
+import com.ncr.geocode.exceptions.CacheMissException;
 import com.ncr.geocode.models.Address;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.mockito.Mock;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
@@ -31,8 +31,8 @@ public class CachedAddressServiceTest {
     @Mock
     WebAddressService webAddressService;
 
-    float lat = 42;
-    float lon = 9001;
+    double lat = 42;
+    double lon = 9001;
 
     @Before
     public void before() {
@@ -54,7 +54,7 @@ public class CachedAddressServiceTest {
 
     @Test
     public void testGet() {
-        when(addressCache.get(any())).thenThrow(NoSuchElementException.class);
+        when(addressCache.get(any())).thenThrow(CacheMissException.class);
 
         cachedAddressService.get(lat, lon);
 

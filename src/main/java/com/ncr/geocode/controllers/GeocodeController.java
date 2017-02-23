@@ -1,5 +1,6 @@
 package com.ncr.geocode.controllers;
 
+import com.ncr.geocode.exceptions.BadRequestException;
 import com.ncr.geocode.models.Address;
 import com.ncr.geocode.services.AddressService;
 import org.slf4j.Logger;
@@ -17,6 +18,10 @@ import java.util.List;
 public class GeocodeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeocodeController.class);
+    private static final int MIN_LAT = -90;
+    private static final int MAX_LAT = 90;
+    private static final int MIN_LON = -180;
+    private static final int MAX_LON = 180;
 
     private final AddressService addressService;
 
@@ -29,10 +34,18 @@ public class GeocodeController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Address getAddress(
-            @RequestParam("lat") float lat,
-            @RequestParam("lon") float lon
+            @RequestParam("lat") double lat,
+            @RequestParam("lon") double lon
     ) {
-        LOGGER.debug("Getting {}/{}", lat, lon);
+
+        if (lat < MIN_LAT || lat > MAX_LAT) {
+            throw new BadRequestException("lat must be between " + MIN_LAT + " and " + MAX_LAT);
+        }
+        if (lon < MIN_LON || lon > MAX_LON) {
+            throw new BadRequestException("lon must be between " + MIN_LON + " and " + MAX_LON);
+        }
+
+        LOGGER.debug("Getting {}/{}", Double.toString(lat), Double.toString(lon));
         return addressService.get(lat, lon);
     }
 

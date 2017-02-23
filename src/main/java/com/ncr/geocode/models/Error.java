@@ -1,14 +1,22 @@
 package com.ncr.geocode.models;
 
+import java.util.List;
+
+import static java.util.Collections.singletonList;
+
 public class Error {
 
-    private final String msg;
+    private final List<String> errors;
 
-    public Error(String msg) {
-        this.msg = msg;
+    public Error(List<String> errors) {
+        this.errors = errors;
     }
 
-    public String getMsg() {
-        return msg;
+    public Error(String errors) {
+        this.errors = singletonList(errors);
+    }
+
+    public List<String> getErrors() {
+        return errors;
     }
 }

@@ -23,7 +23,7 @@ public class GoogleAddressService implements WebAddressService {
     }
 
     @Override
-    public Address getAddress(float lat, float lon) {
+    public Address getAddress(double lat, double lon) {
         try {
             LatLng latLng = new LatLng(lat, lon);
             GeocodingApiRequest geocodingApiRequest = GeocodingApi.reverseGeocode(geoApiContext, latLng);

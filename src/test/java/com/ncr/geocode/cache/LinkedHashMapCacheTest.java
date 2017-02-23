@@ -1,11 +1,11 @@
 package com.ncr.geocode.cache;
 
+import com.ncr.geocode.exceptions.CacheMissException;
 import com.ncr.geocode.models.Address;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +25,7 @@ public class LinkedHashMapCacheTest {
         assertEquals(expectedAddress, actualAddress);
     }
 
-   @Test(expected = NoSuchElementException.class)
+   @Test(expected = CacheMissException.class)
     public void testGetWhenDoesNotContainKey() {
         linkedHashMapCache.get("foo");
     }

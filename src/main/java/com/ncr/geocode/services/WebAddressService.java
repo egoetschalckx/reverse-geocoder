@@ -2,7 +2,8 @@ package com.ncr.geocode.services;
 
 import com.ncr.geocode.models.Address;
 
+@FunctionalInterface
 public interface WebAddressService {
 
-    Address getAddress(float lat, float lon);
+    Address getAddress(double lat, double lon);
 }
