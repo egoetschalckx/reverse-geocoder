@@ -38,11 +38,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "address='" + address + '\'' +
-                ", ts=" + ts +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                '}';
+        return "Address{" + "address='" + address + '\'' + ", ts=" + ts + ", lat=" + lat + ", lon=" + lon + '}';
     }
 }

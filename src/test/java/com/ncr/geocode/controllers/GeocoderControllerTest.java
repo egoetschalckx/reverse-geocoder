@@ -2,19 +2,16 @@ package com.ncr.geocode.controllers;
 
 import com.ncr.geocode.models.Address;
 import com.ncr.geocode.services.AddressService;
-import com.ncr.geocode.services.WebAddressService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.time.OffsetDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;

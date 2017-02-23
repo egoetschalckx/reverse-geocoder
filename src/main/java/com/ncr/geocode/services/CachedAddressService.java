@@ -16,8 +16,8 @@ public class CachedAddressService implements AddressService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeocodeController.class);
 
-    final Cache<String, Address> addressCache;
-    final WebAddressService webAddressService;
+    private final Cache<String, Address> addressCache;
+    private final WebAddressService webAddressService;
 
     @Autowired
     public CachedAddressService(
@@ -42,7 +42,7 @@ public class CachedAddressService implements AddressService {
             LOGGER.debug("Cache hit on {}", latLon);
             return address;
         } catch (NoSuchElementException e) {
-            LOGGER.debug("Cache miss on {}", latLon, e);
+            LOGGER.debug("Cache miss on " + latLon, e);
             Address addressFromWeb = webAddressService.getAddress(lat, lon);
             addressCache.put(latLon, addressFromWeb);
             return addressFromWeb;

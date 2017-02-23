@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApplicationTest {
@@ -43,7 +45,7 @@ public class ApplicationTest {
         while (!executor.isTerminated()) { }
 
         List<Address> list = cache.list();
-        int temp = 42;
+        assertEquals(2, list.size());
     }
 
     @Test(expected = GeocodingException.class)

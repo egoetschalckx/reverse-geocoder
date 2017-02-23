@@ -1,7 +1,6 @@
 package com.ncr.geocode.controllers;
 
 import com.ncr.geocode.models.Error;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;

@@ -3,9 +3,8 @@ package com.ncr.geocode;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 
-@EnableCaching
+@SuppressWarnings("checkstyle:hideutilityclassconstructor")
 @SpringBootApplication
 @EnableAutoConfiguration
 public class Application {
