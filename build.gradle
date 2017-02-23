@@ -1,0 +1,77 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: "idea"
+apply plugin: "java"
+apply plugin: "war"
+//apply plugin: "checkstyle"
+apply plugin: "findbugs"
+apply plugin: "pmd"
+apply plugin: "org.springframework.boot"
+
+jar {
+    baseName = "ncr-geocode"
+    version =  "0.0.1"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "3.3"
+}
+
+dependencies {
+    // Google Maps
+    compile "com.google.maps:google-maps-services:0.1.17"
+
+    // Spring
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-logging"
+
+    // Testing
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.mockito:mockito-core:1.10.19"
+    testCompile "org.powermock:powermock-module-junit4:1.6.6"
+    testCompile "org.powermock:powermock-api-mockito:1.6.6"
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+        testSourceDirs += file("src/test")
+        testSourceDirs += file("src/integTest")
+    }
+
+    project {
+        jdkName = "1.8"
+        languageLevel = "1.8"
+    }
+}
+
+sourceSets {
+    integTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integTest/java')
+        }
+        resources.srcDir file('src/integTest/resources')
+    }
+}
+
+configurations {
+    integTestCompile.extendsFrom testCompile
+    integTestRuntime.extendsFrom testRuntime
+}
+
+//check.dependsOn integTest
+//integTest.mustRunAfter test
