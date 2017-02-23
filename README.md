@@ -18,3 +18,5 @@ To Build - `gradlew build`
 To Run - `gradlew bootRun`
 
 To Test (including static code analysis) - `gradlew check`
+
+API Documentation -  [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
