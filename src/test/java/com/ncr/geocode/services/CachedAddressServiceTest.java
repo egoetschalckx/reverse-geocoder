@@ -52,19 +52,35 @@ public class CachedAddressServiceTest {
         assertEquals(expectedAddress, actualAddresses.get(0));
     }
 
-    @Test
-    public void testGet() {
+    /*@Test
+    public void testGetWhenNotCached() {
+        double lat = 42;
+        double lon =  9001;
+        Address expectedAddress = new Address("foobar", OffsetDateTime.now(), 42, 9001);
         when(addressCache.get(any())).thenThrow(CacheMissException.class);
+        when(webAddressService.getAddress(lat, lon)).thenReturn(expectedAddress);
 
-        cachedAddressService.get(lat, lon);
+        Address actualAddress = cachedAddressService.get(lat, lon);
 
+        assertEquals(expectedAddress, actualAddress);
         verify(addressCache, times(1)).get(lat + "/" + lon);
         verify(webAddressService, times(1)).getAddress(lat, lon);
         verify(addressCache, times(1)).put(eq(lat + "/" + lon), any());
-    }
+    }*/
 
     @Test
     public void testGetWhenCached() {
+        Address expectedAddress = new Address("foobar", OffsetDateTime.now(), 42f, 9001f);
+        when(addressCache.get(any()))
+                .thenThrow(CacheMissException.class).thenReturn(expectedAddress)
+                .thenReturn(expectedAddress);
+
         cachedAddressService.get(42f, 9001f);
+        Address actualAddress = cachedAddressService.get(42f, 9001f);
+
+        assertEquals(expectedAddress, actualAddress);
+        verify(addressCache, times(2)).get(lat + "/" + lon);
+        verify(webAddressService, times(1)).getAddress(lat, lon);
+        verify(addressCache, times(1)).put(eq(lat + "/" + lon), any());
     }
 }
