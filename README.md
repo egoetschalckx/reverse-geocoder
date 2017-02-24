@@ -12,7 +12,6 @@ Replace the dummy `api.key` value in `src/main/resources/googlemaps.properties` 
 - In-Memory Cache 
     - FIFO
     - bounded (configurable)
-    - thread-safe
 - Gradle with Code Quality plugins
 - 100% Code Coverage
 
