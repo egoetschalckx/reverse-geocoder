@@ -24,3 +24,7 @@ To Run - `gradlew bootRun`
 To Test (including static code analysis) - `gradlew check`
 
 API Documentation (once running) - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+Get Address - [http://localhost:8080/address?lat=42.22&lon=-90.01](http://localhost:8080/address?lat=42.22&lon=-90.01)
+
+Get Address Cache - [http://localhost:8080/address/cache](http://localhost:8080/address/cache)
